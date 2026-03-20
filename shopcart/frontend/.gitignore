@@ -1,0 +1,57 @@
+# ======================
+# Node modules (BIG)
+# ======================
+node_modules/
+
+# ======================
+# Build output
+# ======================
+build/
+dist/
+
+# ======================
+# Logs
+# ======================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ======================
+# Environment variables
+# ======================
+.env
+.env.*
+!.env.example
+
+# ======================
+# OS files
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# IDE files
+# ======================
+.vscode/
+.idea/
+
+# ======================
+# Cache / temp
+# ======================
+.cache/
+.parcel-cache/
+.next/
+out/
+.tmp/
+
+# ======================
+# Coverage reports
+# ======================
+coverage/
+
+# ======================
+# Misc
+# ======================
+*.local

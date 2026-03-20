@@ -1,0 +1,197 @@
+.become-seller-page { padding: 32px 0 64px; }
+
+/* Info Layout */
+.seller-info-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.seller-hero {
+  background: linear-gradient(135deg, #1a237e 0%, #2874f0 100%);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.seller-hero-icon { font-size: 64px; line-height: 1; }
+.seller-hero h1 { font-size: 36px; font-weight: 900; }
+.seller-hero h1 span { color: #ffe500; }
+.seller-hero > p { font-size: 16px; opacity: 0.9; }
+
+.seller-perks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.perk-item { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.perk-check { color: #ffe500; flex-shrink: 0; }
+
+.seller-subscription-info { background: rgba(255,255,255,0.15); border-radius: var(--radius-md); padding: 20px; text-align: center; backdrop-filter: blur(8px); }
+.subscription-badge { display: flex; align-items: baseline; justify-content: center; gap: 4px; margin-bottom: 8px; }
+.sub-price { font-size: 48px; font-weight: 900; color: #ffe500; }
+.sub-period { font-size: 18px; opacity: 0.8; }
+.seller-subscription-info p { font-size: 14px; opacity: 0.85; }
+
+.seller-steps-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+}
+.seller-steps-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 24px; }
+
+.how-steps { display: flex; flex-direction: column; gap: 20px; }
+.how-step { display: flex; align-items: flex-start; gap: 16px; }
+.how-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.how-title { font-size: 15px; font-weight: 700; }
+.how-desc { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Pending/Success Card */
+.sub-pending-card {
+  max-width: 520px;
+  margin: 60px auto;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.pending-icon { font-size: 72px; line-height: 1; }
+.sub-pending-card h2 { font-size: 24px; font-weight: 800; }
+.sub-pending-card p { font-size: 15px; color: var(--text-secondary); }
+.pending-note { font-size: 13px; color: var(--text-muted) !important; }
+.sub-pending-card.success .pending-icon { animation: bounce 1s ease; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+/* Payment Layout */
+.seller-payment-layout { max-width: 620px; margin: 0 auto; }
+.payment-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-md);
+}
+.payment-card h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.payment-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
+
+.upi-apps { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.upi-app-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  transition: all 0.2s;
+}
+.upi-app-btn.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+
+.upi-payment-box {
+  background: var(--bg-main);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.upi-info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff3e0;
+  border: 1px solid #ffb300;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.upi-id { color: var(--primary); font-size: 15px; }
+
+.qr-and-upi {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: white;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+}
+.qr-box { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  border: 2px solid var(--text-primary);
+  padding: 6px;
+  border-radius: 4px;
+}
+.qr-cell { width: 10px; height: 10px; background: white; }
+.qr-filled { background: var(--text-primary); }
+.qr-box p { font-size: 11px; font-weight: 700; color: var(--text-secondary); }
+
+.upi-details-box { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.upi-detail-row { display: flex; justify-content: space-between; font-size: 14px; }
+.upi-detail-row span:first-child { color: var(--text-secondary); }
+.amount-text { color: var(--accent-green); font-size: 18px; }
+
+.verification-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #e3f2fd;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.payment-btn-row { display: flex; gap: 12px; }
+.payment-btn-row .btn:last-child { flex: 1; }
+
+.file-upload-area { border: 2px dashed var(--border); border-radius: var(--radius-sm); }
+.file-upload-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.file-upload-label:hover { background: var(--bg-main); }
+.file-selected { color: var(--primary); font-weight: 600; }
+.optional { font-weight: 400; text-transform: none; font-size: 11px; color: var(--text-muted); }
+
+/* Responsive */
+@media (max-width: 1024px) { .seller-info-layout { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  .seller-hero { padding: 32px 24px; }
+  .seller-hero h1 { font-size: 28px; }
+  .seller-perks-grid { grid-template-columns: 1fr; }
+  .payment-card { padding: 24px 16px; }
+}
+@media (max-width: 480px) {
+  .qr-and-upi { flex-direction: column; }
+  .payment-btn-row { flex-direction: column-reverse; }
+  .payment-btn-row .btn { width: 100%; }
+}

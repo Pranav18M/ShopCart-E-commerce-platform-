@@ -1,0 +1,63 @@
+# ======================
+# Backend (Maven build)
+# ======================
+backend/target/
+
+# ======================
+# Logs
+# ======================
+*.log
+logs/
+
+# ======================
+# OS files
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# IDE files
+# ======================
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# ======================
+# Java compiled files
+# ======================
+*.class
+
+# ======================
+# Maven
+# ======================
+.mvn/wrapper/maven-wrapper.jar
+
+# ======================
+# Environment & Secrets
+# ======================
+.env
+.env.*
+
+# ❗ REAL CONFIG (DO NOT COMMIT)
+backend/target/
+backend/src/main/resources/application.properties
+# ======================
+# Uploads (runtime files)
+# ======================
+uploads/
+backend/uploads/
+
+# ======================
+# Temp files
+# ======================
+*.tmp
+*.swp

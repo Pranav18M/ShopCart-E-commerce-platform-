@@ -1,6 +1,7 @@
 # ======================
 # Backend (Maven build)
 # ======================
+target/
 backend/target/
 
 # ======================
@@ -48,8 +49,15 @@ Thumbs.db
 .env.*
 
 # ❗ REAL CONFIG (DO NOT COMMIT)
-backend/target/
 backend/src/main/resources/application.properties
+
+# ======================
+# Build artifacts
+# ======================
+*.jar
+*.war
+*.ear
+
 # ======================
 # Uploads (runtime files)
 # ======================

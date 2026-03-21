@@ -1,5 +1,6 @@
 package com.ecommerce.service.impl;
 
+import com.ecommerce.service.OrderService;
 import com.ecommerce.dto.request.OrderStatusRequest;
 import com.ecommerce.dto.response.OrderItemResponse;
 import com.ecommerce.dto.response.OrderResponse;
@@ -16,6 +17,7 @@ import com.ecommerce.repository.ProductRepository;
 import com.ecommerce.service.OrderService;
 import com.ecommerce.utils.FileStorageUtil;
 import com.ecommerce.utils.SecurityUtils;
+import com.ecommerce.utils.TelegramService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,19 +40,22 @@ public class OrderServiceImpl implements OrderService {
     private final FileStorageUtil fileStorageUtil;
     private final SecurityUtils securityUtils;
     private final ObjectMapper objectMapper;
+    private final TelegramService telegramService;
 
     public OrderServiceImpl(OrderRepository orderRepository,
                             CartRepository cartRepository,
                             ProductRepository productRepository,
                             FileStorageUtil fileStorageUtil,
                             SecurityUtils securityUtils,
-                            ObjectMapper objectMapper) {
+                            ObjectMapper objectMapper,
+                            TelegramService telegramService) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.fileStorageUtil = fileStorageUtil;
         this.securityUtils = securityUtils;
         this.objectMapper = objectMapper;
+        this.telegramService = telegramService;
     }
 
     @Override
@@ -130,6 +136,32 @@ public class OrderServiceImpl implements OrderService {
         cart.getItems().clear();
         cartRepository.save(cart);
 
+        // ── Telegram Notification ──────────────────────────────
+        try {
+            String itemsList = saved.getItems().stream()
+                    .map(i -> "  • " + i.getProductName() + " x" + i.getQuantity()
+                            + " = ₹" + i.getPrice().multiply(BigDecimal.valueOf(i.getQuantity())))
+                    .collect(Collectors.joining("\n"));
+
+            String message = "🛒 *New Order Received!*\n\n" +
+                    "📦 Order ID: #" + saved.getId() + "\n" +
+                    "👤 Customer: " + saved.getUser().getName() + "\n" +
+                    "📞 Phone: " + saved.getDeliveryAddress().getPhone() + "\n" +
+                    "📍 City: " + saved.getDeliveryAddress().getCity() + ", "
+                    + saved.getDeliveryAddress().getState() + "\n" +
+                    "🏠 Address: " + saved.getDeliveryAddress().getAddressLine1() + "\n\n" +
+                    "🛍️ Items:\n" + itemsList + "\n\n" +
+                    "💰 Total: ₹" + saved.getTotalAmount() + "\n" +
+                    "🚚 Delivery: ₹" + saved.getDeliveryCharge() + "\n" +
+                    "💳 Payment: " + saved.getPaymentMethod() + "\n" +
+                    (transactionId != null ? "🔖 TXN ID: " + transactionId + "\n" : "") +
+                    "⏰ Time: " + LocalDateTime.now().toString().substring(0, 16).replace("T", " ");
+
+            telegramService.sendMessage(message);
+        } catch (Exception e) {
+            System.out.println("Telegram notification failed: " + e.getMessage());
+        }
+
         return mapToResponse(saved);
     }
 
@@ -160,6 +192,19 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
         order.setPaymentStatus(PaymentStatus.VERIFIED);
         order.setStatus(OrderStatus.CONFIRMED);
+
+        // ── Telegram Notification ──────────────────────────────
+        try {
+            String message = "✅ *Payment Approved!*\n\n" +
+                    "📦 Order ID: #" + order.getId() + "\n" +
+                    "👤 Customer: " + order.getUser().getName() + "\n" +
+                    "💰 Amount: ₹" + order.getTotalAmount() + "\n" +
+                    "📋 Status: CONFIRMED";
+            telegramService.sendMessage(message);
+        } catch (Exception e) {
+            System.out.println("Telegram notification failed: " + e.getMessage());
+        }
+
         return mapToResponse(orderRepository.save(order));
     }
 
@@ -175,6 +220,19 @@ public class OrderServiceImpl implements OrderService {
                 productRepository.save(item.getProduct());
             }
         }
+
+        // ── Telegram Notification ──────────────────────────────
+        try {
+            String message = "❌ *Payment Rejected!*\n\n" +
+                    "📦 Order ID: #" + order.getId() + "\n" +
+                    "👤 Customer: " + order.getUser().getName() + "\n" +
+                    "💰 Amount: ₹" + order.getTotalAmount() + "\n" +
+                    "📋 Status: CANCELLED";
+            telegramService.sendMessage(message);
+        } catch (Exception e) {
+            System.out.println("Telegram notification failed: " + e.getMessage());
+        }
+
         return mapToResponse(orderRepository.save(order));
     }
 
@@ -184,6 +242,18 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
         order.setStatus(request.getStatus());
         if (request.getNote() != null) order.setAdminNote(request.getNote());
+
+        // ── Telegram Notification ──────────────────────────────
+        try {
+            String message = "📦 *Order Status Updated!*\n\n" +
+                    "Order ID: #" + order.getId() + "\n" +
+                    "Customer: " + order.getUser().getName() + "\n" +
+                    "New Status: " + request.getStatus();
+            telegramService.sendMessage(message);
+        } catch (Exception e) {
+            System.out.println("Telegram notification failed: " + e.getMessage());
+        }
+
         return mapToResponse(orderRepository.save(order));
     }
 

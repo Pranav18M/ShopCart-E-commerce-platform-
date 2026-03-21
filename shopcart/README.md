@@ -506,3 +506,11 @@ EXIT;
 
 # Backend run command
 mvn spring-boot:run
+
+# Token to access the HTTP API:
+8731924093:AAGbGVXTt0nWsr14MeLep3viac8tbGY0enY
+
+Id: 1831365798
+
+https://api.telegram.org/bot8731924093:AAGbGVXTt0nWsr14MeLep3viac8tbGY0enY
+/sendMessage?chat_id=1831365798&text=ShopKart+Bot+Working!

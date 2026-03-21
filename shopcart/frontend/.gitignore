@@ -2,12 +2,15 @@
 # Node modules (BIG)
 # ======================
 node_modules/
+/.pnp
+.pnp.js
 
 # ======================
 # Build output
 # ======================
 build/
 dist/
+out/
 
 # ======================
 # Logs
@@ -16,6 +19,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 *.log
 
 # ======================
@@ -23,6 +27,10 @@ pnpm-debug.log*
 # ======================
 .env
 .env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 !.env.example
 
 # ======================
@@ -30,12 +38,17 @@ pnpm-debug.log*
 # ======================
 .DS_Store
 Thumbs.db
+desktop.ini
+ehthumbs.db
 
 # ======================
 # IDE files
 # ======================
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
 
 # ======================
 # Cache / temp
@@ -43,15 +56,40 @@ Thumbs.db
 .cache/
 .parcel-cache/
 .next/
-out/
 .tmp/
+.sass-cache/
+*.tsbuildinfo
 
 # ======================
 # Coverage reports
 # ======================
 coverage/
+.nyc_output/
+
+# ======================
+# React / CRA specific
+# ======================
+# Testing
+/coverage
+
+# Production
+/build
+
+# Misc
+.eslintcache
+.stylelintcache
+
+# ======================
+# Package manager locks
+# (keep only one)
+# ======================
+# Uncomment if using npm (keep package-lock.json)
+# yarn.lock
+# Uncomment if using yarn (keep yarn.lock)
+# package-lock.json
 
 # ======================
 # Misc
 # ======================
 *.local
+*.map

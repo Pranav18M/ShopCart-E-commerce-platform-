@@ -3,18 +3,22 @@
 # ======================
 target/
 backend/target/
+!.mvn/wrapper/maven-wrapper.jar
 
 # ======================
 # Logs
 # ======================
 *.log
 logs/
+*.log.*
 
 # ======================
 # OS files
 # ======================
 .DS_Store
 Thumbs.db
+desktop.ini
+ehthumbs.db
 
 # ======================
 # IDE files
@@ -23,14 +27,26 @@ Thumbs.db
 # IntelliJ
 .idea/
 *.iml
+*.iws
+*.ipr
+out/
 
 # VS Code
 .vscode/
+*.code-workspace
 
 # Eclipse
 .project
 .classpath
 .settings/
+.factorypath
+
+# NetBeans
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
 
 # ======================
 # Java compiled files
@@ -41,15 +57,24 @@ Thumbs.db
 # Maven
 # ======================
 .mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
 
 # ======================
 # Environment & Secrets
 # ======================
 .env
 .env.*
+*.properties.local
 
 # ❗ REAL CONFIG (DO NOT COMMIT)
 backend/src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/application-prod.properties
+src/main/resources/application-dev.properties
 
 # ======================
 # Build artifacts
@@ -57,15 +82,24 @@ backend/src/main/resources/application.properties
 *.jar
 *.war
 *.ear
+*.nar
 
 # ======================
 # Uploads (runtime files)
 # ======================
 uploads/
 backend/uploads/
+src/main/resources/static/uploads/
 
 # ======================
 # Temp files
 # ======================
 *.tmp
 *.swp
+*.bak
+*.orig
+
+# ======================
+# Spring Boot
+# ======================
+spring-shell.log

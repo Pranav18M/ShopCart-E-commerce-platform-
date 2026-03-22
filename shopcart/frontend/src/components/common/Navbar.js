@@ -1,3 +1,4 @@
+import logo from "../../assets/images/logo2.png";
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -65,9 +66,21 @@ const Navbar = () => {
       <div className="navbar-inner">
         {/* Logo */}
         <Link to="/" className="navbar-logo">
-          <span className="logo-text">Shop<span className="logo-accent">Kart</span></span>
-          <span className="logo-tag">Explore Plus</span>
-        </Link>
+  <div className="logo-container">
+    <img
+      src={logo}
+      alt="Shopix Logo"
+      className="logo-img"
+    />
+
+    <div className="logo-text-wrap">
+      <span className="logo-text">
+        Shop<span className="logo-accent">ix</span>
+      </span>
+      <span className="logo-tag">Explore More</span>
+    </div>
+  </div>
+</Link>
 
         {/* Search Bar */}
         <form className="navbar-search" onSubmit={handleSearch}>

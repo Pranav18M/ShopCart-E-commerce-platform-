@@ -18,29 +18,63 @@
   margin: 0 auto;
   padding: 0 16px;
 }
-
-/* Logo */
+/* Logo wrapper */
 .navbar-logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+/* Align image + text */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 🔥 BIG LOGO (main focus) */
+.logo-img {
+  width: 40px;   /* increased */
+  height: 40px;
+  object-fit: contain;
+
+  /* premium effect */
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+  transition: transform 0.25s ease;
+}
+
+/* subtle hover */
+.navbar-logo:hover .logo-img {
+  transform: scale(1.05);
+}
+
+/* Text block */
+.logo-text-wrap {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  min-width: 120px;
-  text-decoration: none;
-}
-.logo-text {
-  font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 800;
-  color: white;
+  justify-content: center;
   line-height: 1;
-  letter-spacing: -0.5px;
 }
-.logo-accent { color: #ffe500; }
+
+/* Brand text */
+.logo-text {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+/* Accent */
+.logo-accent {
+  color: #ffe500;
+}
+
+/* Tagline */
 .logo-tag {
-  font-size: 10px;
-  color: #90caf9;
-  font-style: italic;
-  font-weight: 600;
+  font-size: 12px;
+  color: #cfe8ff;
+  margin-top: 3px;
+  font-weight: 500;
   letter-spacing: 0.3px;
 }
 

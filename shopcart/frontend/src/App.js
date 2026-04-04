@@ -9,9 +9,9 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import LoadingSpinner from './components/common/LoadingSpinner';
+import SplashScreen from './components/common/SplashScreen';
 import './styles/global.css';
 
-// Lazy loaded pages
 const HomePage          = lazy(() => import('./pages/HomePage'));
 const LoginPage         = lazy(() => import('./pages/LoginPage'));
 const RegisterPage      = lazy(() => import('./pages/RegisterPage'));
@@ -35,35 +35,27 @@ function AppRoutes() {
   return (
     <Suspense fallback={<LoadingSpinner fullPage />}>
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
         <Route path="/login" element={<PageWrapper><LoginPage /></PageWrapper>} />
         <Route path="/register" element={<PageWrapper><RegisterPage /></PageWrapper>} />
         <Route path="/products" element={<PageWrapper><ProductListPage /></PageWrapper>} />
         <Route path="/products/:id" element={<PageWrapper><ProductDetailPage /></PageWrapper>} />
-
-        {/* Authenticated Routes */}
         <Route path="/cart" element={<ProtectedRoute><PageWrapper><CartPage /></PageWrapper></ProtectedRoute>} />
         <Route path="/checkout" element={<ProtectedRoute><PageWrapper><CheckoutPage /></PageWrapper></ProtectedRoute>} />
         <Route path="/orders" element={<ProtectedRoute><PageWrapper><OrdersPage /></PageWrapper></ProtectedRoute>} />
         <Route path="/orders/:id" element={<ProtectedRoute><PageWrapper><OrderDetailPage /></PageWrapper></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><PageWrapper><ProfilePage /></PageWrapper></ProtectedRoute>} />
         <Route path="/become-seller" element={<ProtectedRoute><PageWrapper><BecomeSellerPage /></PageWrapper></ProtectedRoute>} />
-
-        {/* Seller Routes */}
         <Route path="/seller/*" element={
           <ProtectedRoute requiredRole="SELLER">
             <PageWrapper><SellerDashboard /></PageWrapper>
           </ProtectedRoute>
         } />
-
-        {/* Admin Routes */}
         <Route path="/admin/*" element={
           <ProtectedRoute requiredRole="ADMIN">
             <PageWrapper><AdminDashboard /></PageWrapper>
           </ProtectedRoute>
         } />
-
         <Route path="/404" element={<NotFoundPage />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
@@ -72,36 +64,48 @@ function AppRoutes() {
 }
 
 function App() {
+  const [showSplash, setShowSplash] = React.useState(() => {
+    return !sessionStorage.getItem('splashShown');
+  });
+
+  const handleSplashComplete = () => {
+    sessionStorage.setItem('splashShown', 'true');
+    setShowSplash(false);
+  };
+
   return (
-    <Provider store={store}>
-      <AuthProvider>
-        <CartProvider>
-          <Router>
-            <div className="app-layout" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-              <Navbar />
-              <main style={{ flex: 1, paddingTop: 'var(--navbar-height)' }}>
-                <AppRoutes />
-              </main>
-              <Footer />
-            </div>
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                duration: 3000,
-                style: {
-                  borderRadius: '8px',
-                  fontFamily: 'var(--font-main)',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                },
-                success: { style: { background: '#388e3c', color: '#fff' } },
-                error: { style: { background: '#d32f2f', color: '#fff' } },
-              }}
-            />
-          </Router>
-        </CartProvider>
-      </AuthProvider>
-    </Provider>
+    <>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      <Provider store={store}>
+        <AuthProvider>
+          <CartProvider>
+            <Router>
+              <div className="app-layout" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <Navbar />
+                <main style={{ flex: 1, paddingTop: 'var(--navbar-height)' }}>
+                  <AppRoutes />
+                </main>
+                <Footer />
+              </div>
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  duration: 3000,
+                  style: {
+                    borderRadius: '8px',
+                    fontFamily: 'var(--font-main)',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                  },
+                  success: { style: { background: '#388e3c', color: '#fff' } },
+                  error: { style: { background: '#d32f2f', color: '#fff' } },
+                }}
+              />
+            </Router>
+          </CartProvider>
+        </AuthProvider>
+      </Provider>
+    </>
   );
 }
 
